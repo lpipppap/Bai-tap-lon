@@ -3,13 +3,13 @@ package com.auction.model;
 import java.util.UUID;
 
 public abstract class Entity {
-    protected String id;
+    protected int id;
 
-    public Entity() {
-        this.id = setId();
+    public void setId(int id) {
+        this.id = id;
     }
-    abstract public String setId();
-    public String getId() {
+
+    public int getId() {
         return id;
     }
 }

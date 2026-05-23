@@ -14,13 +14,27 @@ public abstract class User extends Entity {
         this.email = email;
     }
 
-    public String getUsername() { return username; }
-    public String getEmail() { return email; }
+    public String getUsername() {
+        return username;
+    }
 
-    public void setUsername(String newName) {this.username = newName;}
-    public void setPassword(String newPassword) {this.password = newPassword;}
-    public void setEmail(String newEmail) {this.email = newEmail;}
-    public String setId() {
-        return "USER-" + UUID.randomUUID().toString();
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setUsername(String newName) {
+        this.username = newName;
+    }
+
+    public void setPassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    public void setEmail(String newEmail) {
+        this.email = newEmail;
     }
 }

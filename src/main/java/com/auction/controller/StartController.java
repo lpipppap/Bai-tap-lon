@@ -14,5 +14,4 @@ public class StartController {
     private void signUpAction(ActionEvent event) {
         SceneUtil.changeScene(event, "/com/auction/view/SignUp.fxml");
     }
-
 }

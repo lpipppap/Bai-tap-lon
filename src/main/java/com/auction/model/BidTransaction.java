@@ -9,6 +9,10 @@ public class BidTransaction {
         this.amount = amount;
     }
 
-    public double getAmount() { return amount; }
-    public String getBidderName() { return bidderName; }
+    public double getAmount() {
+        return amount;
+    }
+    public String getBidderName() {
+        return bidderName;
+    }
 }

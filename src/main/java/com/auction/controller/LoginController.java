@@ -1,16 +1,20 @@
 package com.auction.controller;
 
+import com.auction.manager.UserManager;
 import com.auction.util.SceneUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class LoginController {
+    @FXML private ToggleButton bidder;
+    @FXML private ToggleButton seller;
+    @FXML private ToggleGroup role;
+    @FXML private TextField email;
     @FXML private TextField pwShown;
     @FXML private PasswordField pwHidden;
     @FXML private Button lever;
+    @FXML private Label warning;
 
     @FXML
     private void initialize() {
@@ -18,10 +22,14 @@ public class LoginController {
 
         pwShown.setVisible(false);
         pwShown.setManaged(false);
+
+        bidder.setSelected(true);
+        bidder.setStyle("-fx-background-color: #292b29;");
+        seller.setStyle("-fx-background-color: #000000;");
     }
 
     @FXML
-    private void tooglePassword(ActionEvent event) {
+    private void togglePassword(ActionEvent event) {
         if (pwHidden.isVisible()) {
             pwHidden.setVisible(false);
             pwHidden.setManaged(false);
@@ -42,6 +50,22 @@ public class LoginController {
     }
 
     @FXML
+    private void bidderButton() {
+        bidder.setSelected(true);
+        seller.setSelected(false);
+        bidder.setStyle("-fx-background-color: #292b29;");
+        seller.setStyle("-fx-background-color: #000000;");
+    }
+
+    @FXML
+    private void sellerButton() {
+        seller.setSelected(true);
+        bidder.setSelected(false);
+        seller.setStyle("-fx-background-color: #292b29;");
+        bidder.setStyle("-fx-background-color: #000000;");
+    }
+
+    @FXML
     private void backToStart(ActionEvent event) {
         SceneUtil.changeScene(event, "/com/auction/view/Start.fxml");
     }
@@ -53,6 +77,18 @@ public class LoginController {
 
     @FXML
     private void loginAction(ActionEvent event) {
-        SceneUtil.changeScene(event, "/com/auction/view/AuctionMenu.fxml");
+        String em = email.getText();
+        String pw = pwHidden.getText();
+        ToggleButton selectedButton = (ToggleButton) role.getSelectedToggle();
+        String ro = selectedButton.getText();
+
+        try {
+            UserManager.getInstance().loginUser(em, pw, ro);
+            SceneUtil.changeScene(event, "/com/auction/view/AuctionMenu.fxml");
+        } catch (IllegalArgumentException e) {
+            warning.setText(e.getMessage());
+        } catch (Exception e) {
+            warning.setText("An error had occur");
+        }
     }
 }

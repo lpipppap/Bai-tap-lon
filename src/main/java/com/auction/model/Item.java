@@ -9,6 +9,7 @@ public abstract class Item extends Entity {
     protected double currentPrice;
     protected LocalDateTime startTime;
     protected LocalDateTime endTime;
+
     public Item(String name, double startPrice) {
         super();
         this.name = name;
@@ -17,32 +18,38 @@ public abstract class Item extends Entity {
         this.startTime = LocalDateTime.now();
         this.endTime = startTime.plusMinutes(5);
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }
+
     public double getStartPrice() {
         return startPrice;
     }
+
     public void setCurrentPrice(double currentPrice) {
         this.currentPrice = currentPrice;
     }
+
     public double getCurrentPrice() {
         return currentPrice;
     }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }
+
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
+
     public LocalDateTime getEndTime() {
         return endTime;
     }
-    public String setId() {
-        return "ITEM-" + UUID.randomUUID().toString();
-    }
+
     abstract public void getInfo();
 }
