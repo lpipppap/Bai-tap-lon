@@ -40,15 +40,7 @@ public class UserDAO {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getEmail());
-
-            // Determine role based on user type
-            String role = "Bidder";
-            if (user instanceof Seller) {
-                role = "Seller";
-            } else if (user instanceof Admin) {
-                role = "Admin";
-            }
-            stmt.setString(4, role);
+            stmt.setString(4, user.getClass().getSimpleName());
 
             // Execute insert
             int rowsInserted = stmt.executeUpdate();
@@ -59,13 +51,13 @@ public class UserDAO {
                     if (generatedKeys.next()) {
                         int userId = generatedKeys.getInt(1);
                         user.setId(userId);  // Set the id on the Java object
-                        System.out.println("✓ User saved with ID: " + userId);
+                        System.out.println("User saved with ID: " + userId);
                         return true;
                     }
                 }
             }
         } catch (SQLException e) {
-            System.out.println("✗ Error saving user: " + e.getMessage());
+            System.out.println("Error saving user: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -124,7 +116,7 @@ public class UserDAO {
     /**
      * Get user by username and password (for login)
      *
-     * @param email Email to login
+     * @param email Email to log in
      * @param password Password to verify
      * @return User object if found and password matches, null otherwise
      */

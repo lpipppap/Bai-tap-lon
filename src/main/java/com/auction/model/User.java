@@ -1,7 +1,5 @@
 package com.auction.model;
 
-import java.util.UUID;
-
 public abstract class User extends Entity {
     protected String username;
     protected String password;

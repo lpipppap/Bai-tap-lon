@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Auction {
+    private int id;
     private Item item;
     private BidTransaction winningBid;
     private AuctionState state;
@@ -23,14 +24,14 @@ public class Auction {
     public void startAuction() {
         if (state == AuctionState.OPEN) {
             state = AuctionState.RUNNING;
-            System.out.println("Auction started!!!");
+            System.out.println("Auction started");
         }
     }
 
     public void finishAuction() {
         if (state == AuctionState.RUNNING) {
             state = AuctionState.FINISHED;
-            System.out.println("Aution closed!!!");
+            System.out.println("Auction closed");
         }
     }
 
@@ -48,7 +49,7 @@ public class Auction {
     //XỬ LÝ ĐẶT GIÁ ĐỒNG THỜI (CONCURRENCY)
     public boolean placeBid(String bidderName, double bidAmount) {
         if (state != AuctionState.RUNNING) {
-            System.out.println("Auction is not running!");
+            System.out.println("Auction is not running");
             return false;
         }
         lock.lock();
@@ -60,10 +61,18 @@ public class Auction {
                 notifyObservers(bidAmount, bidderName);
                 return true;
             }
-            System.out.println("Bid must be higher than current price!");
+            System.out.println("Bid must be higher than current price");
             return false;
         } finally {
             lock.unlock(); // Luôn nhả khóa để tránh deadlock
         }
+    }
+
+    public Item getItem() {
+        return this.item;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

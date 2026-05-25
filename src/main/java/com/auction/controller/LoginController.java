@@ -1,7 +1,9 @@
 package com.auction.controller;
 
 import com.auction.manager.UserManager;
+import com.auction.model.User;
 import com.auction.util.SceneUtil;
+import com.auction.util.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -24,6 +26,7 @@ public class LoginController {
         pwShown.setManaged(false);
 
         bidder.setSelected(true);
+        seller.setSelected(false);
         bidder.setStyle("-fx-background-color: #292b29;");
         seller.setStyle("-fx-background-color: #000000;");
     }
@@ -83,7 +86,8 @@ public class LoginController {
         String ro = selectedButton.getText();
 
         try {
-            UserManager.getInstance().loginUser(em, pw, ro);
+            User user = UserManager.getInstance().loginUser(em, pw, ro);
+            SessionManager.setCurrentUser(user);
             SceneUtil.changeScene(event, "/com/auction/view/AuctionMenu.fxml");
         } catch (IllegalArgumentException e) {
             warning.setText(e.getMessage());
