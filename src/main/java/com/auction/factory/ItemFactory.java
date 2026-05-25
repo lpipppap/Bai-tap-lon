@@ -1,15 +1,17 @@
 package com.auction.factory;
 import com.auction.model.*;
 
+import java.time.LocalDateTime;
+
 public class ItemFactory {
-    public static Item createItem(String type, String name, double startingPrice) {
+    public static Item createItem(String type, String name, double startPrice, LocalDateTime startTime, LocalDateTime endTime, Seller seller, String description, String image) {
         switch (type.toLowerCase()) {
             case "electronic" :
-                return new Electronics(name, startingPrice);
+                return new Electronics(name, startPrice, startTime, endTime, seller, description, image);
             case "art":
-                return new Art(name, startingPrice);
+                return new Art(name, startPrice, startTime, endTime, seller, description, image);
             case "vehicle":
-                return new Vehicle(name, startingPrice);
+                return new Vehicle(name, startPrice, startTime, endTime, seller, description, image);
             default:
                 try {
                     throw new IllegalAccessException("Illegal item's type: " + type);

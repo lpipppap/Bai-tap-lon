@@ -56,7 +56,7 @@ public class Auction {
         try {
             if (bidAmount > item.getCurrentPrice()) {
                 item.setCurrentPrice(bidAmount);
-                winningBid = new BidTransaction(bidderName, bidAmount);
+//                winningBid = new BidTransaction(bidderName, bidAmount);       lỗi, tạm thời disable
 
                 notifyObservers(bidAmount, bidderName);
                 return true;
@@ -74,5 +74,17 @@ public class Auction {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setState(AuctionState state) {
+        this.state = state;
+    }
+
+    public void setWinningBid(BidTransaction winningBid) {
+        this.winningBid = winningBid;
     }
 }
