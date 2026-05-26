@@ -27,6 +27,7 @@
                </cursor>
             </TextField>
             <Region prefHeight="200.0" prefWidth="400.0" />
+            <Button mnemonicParsing="false" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="+ CREATE AUCTION" />
          </items>
       </ToolBar>
       <HBox prefHeight="553.0" prefWidth="1600.0" VBox.vgrow="ALWAYS">

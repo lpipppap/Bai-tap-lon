@@ -91,10 +91,11 @@ public class SignUpController {
         String ro = selectedButton.getText();
 
         try {
-            UserManager.getInstance().registerUser(un, pw, cf, em, ro);
-            User user = UserManager.getInstance().loginUser(em, pw, ro);
-            SessionManager.setCurrentUser(user);
-            SceneUtil.changeScene(event, "/com/auction/view/AuctionMenu.fxml");
+            if (UserManager.getInstance().registerUser(un, pw, cf, em, ro)) {
+                User user = UserManager.getInstance().loginUser(em, pw, ro);
+                SessionManager.setCurrentUser(user);
+                SceneUtil.changeScene(event, "/com/auction/view/AuctionMenu.fxml");
+            } else throw new Exception();
         } catch (IllegalArgumentException e) {
             warning.setText(e.getMessage());
         } catch (Exception e) {
