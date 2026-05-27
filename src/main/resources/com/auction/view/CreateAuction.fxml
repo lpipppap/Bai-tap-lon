@@ -16,7 +16,7 @@
    <children>
       <AnchorPane layoutX="300.0" layoutY="50.0" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #292b29; -fx-border-color: #02fdba; -fx-background-radius: 50; -fx-border-radius: 50;">
          <children>
-            <ImageView fx:id="image" fitHeight="400.0" fitWidth="400.0" layoutX="50.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageView" fitHeight="400.0" fitWidth="400.0" layoutX="50.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
             <ToggleButton fx:id="vehicle" layoutX="850.0" layoutY="170.0" mnemonicParsing="false" onAction="#vehicleButton" prefHeight="40.0" prefWidth="100.0" text="Vehicle" textFill="#02fdba">
                <font>
                   <Font size="14.0" />
@@ -89,22 +89,22 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="500.0" layoutY="465.0" text="Select start time:" textFill="#02fdba">
+            <Label layoutX="500.0" layoutY="465.0" text="Select start hour:" textFill="#02fdba">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="750.0" layoutY="465.0" text="Select end time:" textFill="#02fdba">
+            <Label layoutX="750.0" layoutY="465.0" text="Select end hour:" textFill="#02fdba">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="500.0" layoutY="530.0" text="Select start time:" textFill="#02fdba">
+            <Label layoutX="500.0" layoutY="530.0" text="Select start minute:" textFill="#02fdba">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="750.0" layoutY="530.0" text="Select end time:" textFill="#02fdba">
+            <Label layoutX="750.0" layoutY="530.0" text="Select end minute:" textFill="#02fdba">
                <font>
                   <Font size="14.0" />
                </font>

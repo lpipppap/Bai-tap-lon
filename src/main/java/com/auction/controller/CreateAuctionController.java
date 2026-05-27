@@ -36,11 +36,11 @@ public class CreateAuctionController {
     @FXML private Spinner<Integer> endMinute;
     @FXML private TextArea description;
     @FXML private ImageView imageView;
-    @FXML private File selectedImageFile;
-    @FXML private String imageFileName;
     @FXML private Button setImage;
     @FXML private Button createButton;
     @FXML private Label warning;
+    private File selectedImageFile;
+    private String imageFileName;
 
     @FXML
     private void initialize() {
@@ -49,9 +49,12 @@ public class CreateAuctionController {
         electronic.setSelected(false);
         vehicle.setSelected(false);
 
-        art.setStyle("-fx-background-color: #292b29;");
+        art.setStyle("-fx-background-color: #02fdba;");
+        art.setTextFill(Color.BLACK);
         electronic.setStyle("-fx-background-color: #000000;");
+        electronic.setTextFill(Color.web("#02fdba"));
         vehicle.setStyle("-fx-background-color: #000000;");
+        vehicle.setTextFill(Color.web("#02fdba"));
 
         startHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 0));
         endHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 0));
@@ -70,9 +73,12 @@ public class CreateAuctionController {
         electronic.setSelected(false);
         vehicle.setSelected(false);
 
-        art.setStyle("-fx-background-color: #292b29;");
+        art.setStyle("-fx-background-color: #02fdba;");
+        art.setTextFill(Color.BLACK);
         electronic.setStyle("-fx-background-color: #000000;");
+        electronic.setTextFill(Color.web("#02fdba"));
         vehicle.setStyle("-fx-background-color: #000000;");
+        vehicle.setTextFill(Color.web("#02fdba"));
     }
 
     @FXML
@@ -81,9 +87,12 @@ public class CreateAuctionController {
         electronic.setSelected(true);
         vehicle.setSelected(false);
 
-        electronic.setStyle("-fx-background-color: #292b29;");
+        electronic.setStyle("-fx-background-color: #02fdba;");
+        electronic.setTextFill(Color.BLACK);
         art.setStyle("-fx-background-color: #000000;");
+        art.setTextFill(Color.web("#02fdba"));
         vehicle.setStyle("-fx-background-color: #000000;");
+        vehicle.setTextFill(Color.web("#02fdba"));
     }
 
     @FXML
@@ -92,13 +101,16 @@ public class CreateAuctionController {
         electronic.setSelected(false);
         vehicle.setSelected(true);
 
-        vehicle.setStyle("-fx-background-color: #292b29;");
+        vehicle.setStyle("-fx-background-color: #02fdba;");
+        vehicle.setTextFill(Color.BLACK);
         electronic.setStyle("-fx-background-color: #000000;");
+        electronic.setTextFill(Color.web("#02fdba"));
         art.setStyle("-fx-background-color: #000000;");
+        art.setTextFill(Color.web("#02fdba"));
     }
 
     @FXML
-    public void selectImage() {
+    private void selectImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select product image");
 
@@ -106,7 +118,7 @@ public class CreateAuctionController {
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
 
-        File file = fileChooser.showOpenDialog(name.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(imageView.getScene().getWindow());
 
         if (file != null) {
             this.selectedImageFile = file;

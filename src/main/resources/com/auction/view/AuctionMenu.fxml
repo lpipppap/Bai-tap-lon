@@ -21,13 +21,13 @@
             <Button mnemonicParsing="false" onAction="#profileAction" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #000000; -fx-border-color: #02fdba; -fx-border-radius: 10;" text="PROFILE" textFill="#02fdba" />
             <Button mnemonicParsing="false" onAction="#auctionMenuAction" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #000000; -fx-border-color: #02fdba; -fx-border-radius: 10;" text="AUCTIONS" textFill="#02fdba" />
             <Region prefHeight="200.0" prefWidth="400.0" />
-            <TextField alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="400.0" promptText="Search" style="-fx-background-color: #292b29; -fx-border-color: #02fdba; -fx-border-radius: 50;">
+            <TextField fx:id="searchBox" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="400.0" promptText="Search" style="-fx-background-color: #292b29; -fx-border-color: #02fdba; -fx-border-radius: 50;">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
             <Region prefHeight="200.0" prefWidth="400.0" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="+ CREATE AUCTION" />
+            <Button fx:id="createAuction" mnemonicParsing="false" onAction="#createAuctionAction" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="+ CREATE AUCTION" />
          </items>
       </ToolBar>
       <HBox prefHeight="553.0" prefWidth="1600.0" VBox.vgrow="ALWAYS">
