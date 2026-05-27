@@ -25,7 +25,7 @@
                   <ToggleGroup fx:id="type" />
                </toggleGroup>
             </ToggleButton>
-            <ToggleButton fx:id="electronic" layoutX="750.0" layoutY="170.0" mnemonicParsing="false" onAction="#electronicButton" prefHeight="40.0" prefWidth="100.0" text="Electronic" textFill="#02fdba" toggleGroup="$type">
+            <ToggleButton fx:id="electronics" layoutX="750.0" layoutY="170.0" mnemonicParsing="false" onAction="#electronicButton" prefHeight="40.0" prefWidth="100.0" text="Electronics" textFill="#02fdba" toggleGroup="$type">
                <font>
                   <Font size="14.0" />
                </font>

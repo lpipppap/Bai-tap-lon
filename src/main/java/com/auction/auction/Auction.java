@@ -87,4 +87,8 @@ public class Auction {
     public void setWinningBid(BidTransaction winningBid) {
         this.winningBid = winningBid;
     }
+
+    public AuctionState getState() {
+        return state;
+    }
 }

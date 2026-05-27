@@ -20,22 +20,22 @@
       </ToolBar>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #292b29; -fx-border-color: #02fdba;" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="258.0" layoutY="68.0" prefHeight="35.0" prefWidth="541.0" text="Label" textFill="#02fdba">
+            <Label fx:id="id" layoutX="300.0" layoutY="50.0" prefHeight="50.0" prefWidth="900.0" text="Label" textFill="#02fdba">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="258.0" layoutY="239.0" prefHeight="35.0" prefWidth="541.0" text="Label" textFill="#02fdba">
+            <Label fx:id="email" layoutX="300.0" layoutY="250.0" prefHeight="50.0" prefWidth="900.0" text="Label" textFill="#02fdba">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="258.0" layoutY="157.0" prefHeight="35.0" prefWidth="541.0" text="Label" textFill="#02fdba">
+            <Label fx:id="name" layoutX="300.0" layoutY="150.0" prefHeight="50.0" prefWidth="900.0" text="Label" textFill="#02fdba">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="91.0" layoutY="66.0" mnemonicParsing="false" onAction="#logOutAction" style="-fx-background-color: #02fdba;" text="Log out">
+            <Button layoutX="100.0" layoutY="100.0" mnemonicParsing="false" onAction="#logOutAction" style="-fx-background-color: #02fdba;" text="Log out">
                <font>
                   <Font size="18.0" />
                </font>

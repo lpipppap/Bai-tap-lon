@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class ItemFactory {
     public static Item createItem(String type, String name, double startPrice, LocalDateTime startTime, LocalDateTime endTime, Seller seller, String description, String image) {
         switch (type.toLowerCase()) {
-            case "electronic" :
+            case "electronics" :
                 return new Electronics(name, startPrice, startTime, endTime, seller, description, image);
             case "art":
                 return new Art(name, startPrice, startTime, endTime, seller, description, image);

@@ -5,20 +5,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: #000000; -fx-border-color: #02fdba; -fx-background-radius: 50; -fx-border-radius: 50;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.auction.controller.AuctionPreviewController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="94.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="94.0" layoutY="462.0" prefHeight="60.0" prefWidth="300.0" text="Label" textFill="#02fdba">
+      <ImageView fx:id="image" fitHeight="400.0" fitWidth="400.0" layoutX="94.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="name" layoutX="94.0" layoutY="462.0" prefHeight="60.0" prefWidth="400.0" text="Label" textFill="#02fdba">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="94.0" layoutY="542.0" prefHeight="60.0" prefWidth="300.0" text="Label" textFill="#02fdba">
+      <Label fx:id="status" layoutX="94.0" layoutY="542.0" prefHeight="60.0" prefWidth="400.0" text="Label" textFill="#02fdba">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="94.0" layoutY="618.0" prefHeight="60.0" prefWidth="300.0" text="Label" textFill="#02fdba">
+      <Label fx:id="price" layoutX="94.0" layoutY="618.0" prefHeight="60.0" prefWidth="400.0" text="Label" textFill="#02fdba">
          <font>
             <Font size="24.0" />
          </font>

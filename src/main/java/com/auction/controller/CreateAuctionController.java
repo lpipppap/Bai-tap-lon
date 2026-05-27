@@ -24,7 +24,7 @@ import java.time.LocalTime;
 public class CreateAuctionController {
     @FXML private ToggleGroup type;
     @FXML private ToggleButton art;
-    @FXML private ToggleButton electronic;
+    @FXML private ToggleButton electronics;
     @FXML private ToggleButton vehicle;
     @FXML private TextField name;
     @FXML private TextField startPrice;
@@ -46,13 +46,13 @@ public class CreateAuctionController {
     private void initialize() {
 
         art.setSelected(true);
-        electronic.setSelected(false);
+        electronics.setSelected(false);
         vehicle.setSelected(false);
 
         art.setStyle("-fx-background-color: #02fdba;");
         art.setTextFill(Color.BLACK);
-        electronic.setStyle("-fx-background-color: #000000;");
-        electronic.setTextFill(Color.web("#02fdba"));
+        electronics.setStyle("-fx-background-color: #000000;");
+        electronics.setTextFill(Color.web("#02fdba"));
         vehicle.setStyle("-fx-background-color: #000000;");
         vehicle.setTextFill(Color.web("#02fdba"));
 
@@ -70,13 +70,13 @@ public class CreateAuctionController {
     @FXML
     private void artButton() {
         art.setSelected(true);
-        electronic.setSelected(false);
+        electronics.setSelected(false);
         vehicle.setSelected(false);
 
         art.setStyle("-fx-background-color: #02fdba;");
         art.setTextFill(Color.BLACK);
-        electronic.setStyle("-fx-background-color: #000000;");
-        electronic.setTextFill(Color.web("#02fdba"));
+        electronics.setStyle("-fx-background-color: #000000;");
+        electronics.setTextFill(Color.web("#02fdba"));
         vehicle.setStyle("-fx-background-color: #000000;");
         vehicle.setTextFill(Color.web("#02fdba"));
     }
@@ -84,11 +84,11 @@ public class CreateAuctionController {
     @FXML
     private void electronicButton() {
         art.setSelected(false);
-        electronic.setSelected(true);
+        electronics.setSelected(true);
         vehicle.setSelected(false);
 
-        electronic.setStyle("-fx-background-color: #02fdba;");
-        electronic.setTextFill(Color.BLACK);
+        electronics.setStyle("-fx-background-color: #02fdba;");
+        electronics.setTextFill(Color.BLACK);
         art.setStyle("-fx-background-color: #000000;");
         art.setTextFill(Color.web("#02fdba"));
         vehicle.setStyle("-fx-background-color: #000000;");
@@ -98,13 +98,13 @@ public class CreateAuctionController {
     @FXML
     private void vehicleButton() {
         art.setSelected(false);
-        electronic.setSelected(false);
+        electronics.setSelected(false);
         vehicle.setSelected(true);
 
         vehicle.setStyle("-fx-background-color: #02fdba;");
         vehicle.setTextFill(Color.BLACK);
-        electronic.setStyle("-fx-background-color: #000000;");
-        electronic.setTextFill(Color.web("#02fdba"));
+        electronics.setStyle("-fx-background-color: #000000;");
+        electronics.setTextFill(Color.web("#02fdba"));
         art.setStyle("-fx-background-color: #000000;");
         art.setTextFill(Color.web("#02fdba"));
     }
