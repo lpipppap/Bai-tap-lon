@@ -1,9 +1,9 @@
 package com.auction.auction;
 
+import com.auction.model.Item;
 import com.auction.model.*;
 import com.auction.observer.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
@@ -13,54 +13,83 @@ public class Auction {
     private Item item;
     private BidTransaction winningBid;
     private AuctionState state;
+
     private List<BidObserver> observers = new ArrayList<>();
+    private final ReentrantLock lock = new ReentrantLock();
 
     public Auction(Item item) {
         this.item = item;
         this.state = AuctionState.OPEN;
     }
-
-    // State transitions
+    //LOGIC CHUYỂN TRẠNG THÁI
     public void startAuction() {
         if (state == AuctionState.OPEN) {
             state = AuctionState.RUNNING;
+            System.out.println("Auction started");
         }
     }
 
     public void finishAuction() {
         if (state == AuctionState.RUNNING) {
             state = AuctionState.FINISHED;
+            System.out.println("Auction closed");
         }
     }
 
-    // Observer pattern
+    //OBSERVER PATTERN
     public void addObserver(BidObserver observer) {
-        if (!observers.contains(observer)) {
         observers.add(observer);
-        }
     }
 
-    public void notifyObservers(double newPrice, String bidderName) {
+    public void notifyObservers(double newPrice, Bidder bidderName) {
         for (BidObserver observer : observers) {
             observer.onNewBid(newPrice, bidderName);
         }
     }
 
-    // Getters
-    public Item getItem() { return item; }
-    public int getId() { return id; }
-    public AuctionState getState() { return state; }
-    public BidTransaction getWinningBid() { return winningBid; }
-    public boolean isRunning() { return state == AuctionState.RUNNING; }
-    public boolean isFinished() { return state == AuctionState.FINISHED; }
-    public boolean isExpired() { return LocalDateTime.now().isAfter(item.getEndTime()); }
+    //XỬ LÝ ĐẶT GIÁ ĐỒNG THỜI (CONCURRENCY)
+    public boolean placeBid(Bidder bidderName, double bidAmount) {
+        if (state != AuctionState.RUNNING) {
+            System.out.println("Auction is not running");
+            return false;
+        }
+        lock.lock();
+        try {
+            if (bidAmount > item.getCurrentPrice()) {
+                item.setCurrentPrice(bidAmount);
+//                winningBid = new BidTransaction(bidderName, bidAmount);       lỗi, tạm thời disable
 
-    // Setters
-    public void setId(int id) { this.id = id; }
-    public void setState(AuctionState state) { this.state = state; }
+                notifyObservers(bidAmount, bidderName);
+                return true;
+            }
+            System.out.println("Bid must be higher than current price");
+            return false;
+        } finally {
+            lock.unlock(); // Luôn nhả khóa để tránh deadlock
+        }
+    }
+
+    public Item getItem() {
+        return this.item;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setState(AuctionState state) {
+        this.state = state;
+    }
 
     public void setWinningBid(BidTransaction winningBid) {
         this.winningBid = winningBid;
-        this.item.setCurrentPrice(winningBid.getBidAmount());
+    }
+
+    public AuctionState getState() {
+        return this.state;
     }
 }
