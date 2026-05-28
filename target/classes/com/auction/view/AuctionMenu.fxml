@@ -56,7 +56,7 @@
             </ScrollPane>
             <VBox alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
                <children>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="400.0" style="-fx-background-color: #000000; -fx-border-color: #02fdba;" />
+                  <AnchorPane fx:id="details" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="400.0" style="-fx-background-color: #000000; -fx-border-color: #02fdba;" />
                </children>
             </VBox>
          </children>
