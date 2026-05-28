@@ -14,5 +14,6 @@ public class BidDAO {
     }
 
     public boolean saveBid(BidTransaction bidTransaction) {
+        return true;
     }
 }

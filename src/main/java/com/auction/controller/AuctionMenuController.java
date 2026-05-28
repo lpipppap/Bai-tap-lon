@@ -11,6 +11,7 @@ import com.auction.util.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +25,7 @@ public class AuctionMenuController {
     @FXML private GridPane gridPane;
     @FXML private TextField searchBox;
     @FXML private Button createAuction;
+    @FXML private AnchorPane detail;
 
     @FXML
     private void initialize() {
@@ -37,6 +39,7 @@ public class AuctionMenuController {
             createAuction.setDisable(true);
             createAuction.setManaged(false);
         }
+
         try {
             displayAuctions(user);
         } catch (IOException e) {
@@ -70,7 +73,7 @@ public class AuctionMenuController {
             AnchorPane card = loader.load();
 
             AuctionPreviewController controller = loader.getController();
-            controller.setAuctionPreview(auction);
+            controller.setAuctionPreview(auction, this);
 
             gridPane.add(card, col, row);
 
@@ -84,8 +87,7 @@ public class AuctionMenuController {
 
     private void displayAuctions(User user) throws IOException {
         List<Auction> allAuctions = AuctionDAO.getInstance().getAllAuctions();
-        List<Auction> filtered = new ArrayList<>(
-        );
+        List<Auction> filtered = new ArrayList<>();
 
         if (user instanceof Seller) {
             int sellerId = user.getId();
@@ -105,5 +107,32 @@ public class AuctionMenuController {
         }
 
         displayPreparation(filtered);
+    }
+
+    public void showAuctionDetails(Auction selectedAuction) {
+        try {
+            // 1. Load file FXML của màn hình Detail
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/auction/view/AuctionDetails.fxml"));
+            AnchorPane detailNode = loader.load();
+
+            // 2. Lấy Controller của màn hình Detail để bơm dữ liệu phòng qua
+            AuctionDetailsController detailController = loader.getController();
+            detailController.setDetailsView(selectedAuction);
+
+            // 3. Xóa sạch những thứ cũ đang hiển thị ở ô bên phải (nếu có)
+            detail.getChildren().clear();
+
+            // 4. Ép giao diện Detail tự động giãn vừa khít ô bên phải
+            AnchorPane.setTopAnchor(detailNode, 0.0);
+            AnchorPane.setBottomAnchor(detailNode, 0.0);
+            AnchorPane.setLeftAnchor(detailNode, 0.0);
+            AnchorPane.setRightAnchor(detailNode, 0.0);
+
+            // 5. Nhét giao diện Detail vào ô bên phải!
+            detail.getChildren().add(detailNode);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -76,22 +76,33 @@ public class AuctionManager {
         return AuctionDAO.getInstance().saveAuction(auction);
     }
 
-    public boolean checkBid(Auction auction, double amount) {
+    public boolean checkBid(Auction auction, String amount) {
         User currentUser = SessionManager.getCurrentUser();
+
+        Double doubleAmount = 0.0;
+        try {
+            doubleAmount = Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Please enter a valid number");
+        }
+
+        if (doubleAmount <= auction.getItem().getCurrentPrice()) {
+            throw new IllegalArgumentException("Price must be higher than the current price");
+        }
 
         lock.lock();
         try {
-            if (!auction.isRunning() || auction.isExpired() || currentUser == null || amount <= auction.getItem().getCurrentPrice()) {
+            if (!auction.isRunning() || auction.isExpired() || currentUser == null) {
                 return false;
             }
 
-            BidTransaction newBid = new BidTransaction(auction.getId(), (Bidder) currentUser, amount, LocalDateTime.now());
+            BidTransaction newBid = new BidTransaction(auction.getId(), (Bidder) currentUser, doubleAmount, LocalDateTime.now());
 
             if (BidDAO.getInstance().saveBid(newBid)) {
 
                 auction.setWinningBid(newBid);
 
-                auction.notifyObservers(amount, currentUser.getUsername());
+                auction.notifyObservers(doubleAmount, currentUser.getUsername());
 
                 return true;
             }
