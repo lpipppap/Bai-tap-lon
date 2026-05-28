@@ -61,6 +61,13 @@ public class Auction {
 
     public void setWinningBid(BidTransaction winningBid) {
         this.winningBid = winningBid;
-        this.item.setCurrentPrice(winningBid.getBidAmount());
+
+        if (winningBid != null) {
+            // Nếu đã có người đặt giá, giá hiện tại bằng giá của lượt bid cao nhất
+            this.item.setCurrentPrice(winningBid.getBidAmount());
+        } else {
+            // 🔥 NẾU CHƯA CÓ AI BID (winningBid bị null): Giá hiện tại giữ nguyên bằng giá khởi điểm
+            this.item.setCurrentPrice(this.item.getStartPrice());
+        }
     }
 }

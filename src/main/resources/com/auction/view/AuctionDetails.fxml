@@ -6,28 +6,33 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.auction.controller.AuctionDetailsController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="94.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="44.0" layoutY="464.0" prefHeight="60.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+      <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="100.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="name" layoutX="50.0" layoutY="470.0" prefHeight="60.0" prefWidth="500.0" text="Label" textFill="#02fdba">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="44.0" layoutY="535.0" prefHeight="60.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+      <Label fx:id="type" layoutX="50.0" layoutY="540.0" prefHeight="60.0" prefWidth="500.0" text="Label" textFill="#02fdba">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="44.0" layoutY="608.0" prefHeight="60.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+      <Label fx:id="currentPrice" layoutX="50.0" layoutY="610.0" prefHeight="60.0" prefWidth="500.0" text="Label" textFill="#02fdba">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="144.0" layoutY="692.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="Tham gia đấu giá">
+      <Button layoutX="150.0" layoutY="800.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="Tham gia đấu giá">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
+      <Label fx:id="timeLeft" layoutX="50.0" layoutY="680.0" prefHeight="60.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

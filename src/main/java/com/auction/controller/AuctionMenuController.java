@@ -25,7 +25,7 @@ public class AuctionMenuController {
     @FXML private GridPane gridPane;
     @FXML private TextField searchBox;
     @FXML private Button createAuction;
-    @FXML private AnchorPane detail;
+    @FXML private AnchorPane details;
 
     @FXML
     private void initialize() {
@@ -120,7 +120,7 @@ public class AuctionMenuController {
             detailController.setDetailsView(selectedAuction);
 
             // 3. Xóa sạch những thứ cũ đang hiển thị ở ô bên phải (nếu có)
-            detail.getChildren().clear();
+            details.getChildren().clear();
 
             // 4. Ép giao diện Detail tự động giãn vừa khít ô bên phải
             AnchorPane.setTopAnchor(detailNode, 0.0);
@@ -129,7 +129,7 @@ public class AuctionMenuController {
             AnchorPane.setRightAnchor(detailNode, 0.0);
 
             // 5. Nhét giao diện Detail vào ô bên phải!
-            detail.getChildren().add(detailNode);
+            details.getChildren().add(detailNode);
 
         } catch (IOException e) {
             e.printStackTrace();
