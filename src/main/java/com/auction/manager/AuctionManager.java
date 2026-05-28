@@ -82,7 +82,7 @@ public class AuctionManager {
 
         lock.lock();
         try {
-            if ( auction.getState() != AuctionState.RUNNING || auction.getState() == AuctionState.FINISHED || currentUser == null || amount <= auction.getItem().getCurrentPrice()) {
+            if ( !(auction.isRunning())|| auction.isFinished() || currentUser == null || amount <= auction.getItem().getCurrentPrice()) {
                 return false;
             }
 
