@@ -1,7 +1,5 @@
 package com.auction.model;
 
-import java.util.UUID;
-
 public abstract class Entity {
     protected int id;
 

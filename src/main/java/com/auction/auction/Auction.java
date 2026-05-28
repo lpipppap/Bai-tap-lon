@@ -36,11 +36,11 @@ public class Auction {
     // Observer pattern
     public void addObserver(BidObserver observer) {
         if (!observers.contains(observer)) {
-        observers.add(observer);
+            observers.add(observer);
         }
     }
 
-    public void notifyObservers(double newPrice, String bidderName) {
+    public void notifyObservers(double newPrice, Bidder bidderName) {
         for (BidObserver observer : observers) {
             observer.onNewBid(newPrice, bidderName);
         }

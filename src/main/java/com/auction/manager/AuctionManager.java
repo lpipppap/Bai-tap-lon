@@ -1,6 +1,7 @@
 package com.auction.manager;
 
 import com.auction.auction.Auction;
+import com.auction.auction.AuctionState;
 import com.auction.dao.AuctionDAO;
 import com.auction.dao.BidDAO;
 import com.auction.factory.ItemFactory;
@@ -102,7 +103,7 @@ public class AuctionManager {
 
                 auction.setWinningBid(newBid);
 
-                auction.notifyObservers(doubleAmount, currentUser.getUsername());
+                auction.notifyObservers(doubleAmount, (Bidder) currentUser);
 
                 return true;
             }
