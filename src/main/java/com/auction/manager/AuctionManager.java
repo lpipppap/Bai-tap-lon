@@ -2,13 +2,20 @@ package com.auction.manager;
 
 import com.auction.auction.Auction;
 import com.auction.dao.AuctionDAO;
+import com.auction.dao.BidDAO;
 import com.auction.factory.ItemFactory;
+import com.auction.model.BidTransaction;
+import com.auction.model.Bidder;
 import com.auction.model.Seller;
+import com.auction.model.User;
+import com.auction.util.SessionManager;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AuctionManager {
     private static AuctionManager instance;
+    private final ReentrantLock lock = new ReentrantLock();
 
     private AuctionManager() {
         System.out.println("Auction Manager created");
@@ -67,5 +74,31 @@ public class AuctionManager {
         Auction auction = new Auction(ItemFactory.createItem(type, name, startingPrice, startTime, endTime, seller, description, image));
 
         return AuctionDAO.getInstance().saveAuction(auction);
+    }
+
+    public boolean checkBid(Auction auction, double amount) {
+        User currentUser = SessionManager.getCurrentUser();
+
+        lock.lock();
+        try {
+            if (!auction.isRunning() || auction.isExpired() || currentUser == null || amount <= auction.getItem().getCurrentPrice()) {
+                return false;
+            }
+
+            BidTransaction newBid = new BidTransaction(auction.getId(), (Bidder) currentUser, amount, LocalDateTime.now());
+
+            if (BidDAO.getInstance().saveBid(newBid)) {
+
+                auction.setWinningBid(newBid);
+
+                auction.notifyObservers(amount, currentUser.getUsername());
+
+                return true;
+            }
+
+            return false;
+        } finally {
+            lock.unlock();
+        }
     }
 }

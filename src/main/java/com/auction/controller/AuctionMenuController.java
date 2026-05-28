@@ -70,7 +70,7 @@ public class AuctionMenuController {
             AnchorPane card = loader.load();
 
             AuctionPreviewController controller = loader.getController();
-            controller.setAuctionData(auction);
+            controller.setAuctionPreview(auction);
 
             gridPane.add(card, col, row);
 
@@ -98,7 +98,7 @@ public class AuctionMenuController {
             filtered = allAuctions;
         } else {
             for (Auction auction : allAuctions) {
-                if (auction.getState() == AuctionState.RUNNING || auction.getState() == AuctionState.OPEN) {
+                if (auction.getState() == AuctionState.RUNNING || auction.getState() == AuctionState.OPEN || auction.getState() == AuctionState.FINISHED) {
                     filtered.add(auction);
                 }
             }

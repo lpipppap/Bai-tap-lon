@@ -12,7 +12,7 @@ public class AuctionPreviewController {
     @FXML private Label price;
     @FXML private ImageView image;
 
-    public void setAuctionData(Auction auction) {
+    public void setAuctionPreview(Auction auction) {
         name.setText("Name: " + auction.getItem().getName());
         status.setText("Status: " + auction.getState().toString());
         price.setText("Current price: " + auction.getItem().getCurrentPrice());
