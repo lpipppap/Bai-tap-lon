@@ -9,6 +9,8 @@ public class BidTransaction {
     private double bidAmount;
     private LocalDateTime bidTime;
 
+    public BidTransaction() {}
+
     public BidTransaction(int auctionId, Bidder bidder, double bidAmount, LocalDateTime bidTime) {
         this.auctionId = auctionId;
         this.bidder = bidder;

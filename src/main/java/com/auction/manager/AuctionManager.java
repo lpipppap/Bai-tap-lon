@@ -1,6 +1,7 @@
 package com.auction.manager;
 
 import com.auction.auction.Auction;
+import com.auction.auction.AuctionState;
 import com.auction.dao.AuctionDAO;
 import com.auction.dao.BidDAO;
 import com.auction.factory.ItemFactory;
@@ -81,7 +82,7 @@ public class AuctionManager {
 
         lock.lock();
         try {
-            if (!auction.isRunning() || auction.isExpired() || currentUser == null || amount <= auction.getItem().getCurrentPrice()) {
+            if ( auction.getState() != AuctionState.RUNNING || auction.getState() == AuctionState.FINISHED || currentUser == null || amount <= auction.getItem().getCurrentPrice()) {
                 return false;
             }
 
@@ -89,9 +90,12 @@ public class AuctionManager {
 
             if (BidDAO.getInstance().saveBid(newBid)) {
 
+                auction.getItem().setCurrentPrice(amount);
+
+
                 auction.setWinningBid(newBid);
 
-                auction.notifyObservers(amount, currentUser.getUsername());
+                auction.notifyObservers(amount,(Bidder) currentUser);
 
                 return true;
             }
