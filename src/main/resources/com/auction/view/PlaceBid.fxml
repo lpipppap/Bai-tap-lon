@@ -22,7 +22,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="curentPrice" layoutX="600.0" layoutY="200.0" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+            <Label fx:id="currentPrice" layoutX="600.0" layoutY="200.0" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
                <font>
                   <Font size="24.0" />
                </font>
@@ -50,7 +50,7 @@
             <TextField fx:id="enterPrice" layoutX="950.0" layoutY="530.0" prefHeight="50.0" prefWidth="200.0" />
          </children>
       </AnchorPane>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="&lt;" textFill="#02fdba">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToMenu" style="-fx-background-color: transparent;" text="&lt;" textFill="#02fdba">
          <font>
             <Font size="48.0" />
          </font>

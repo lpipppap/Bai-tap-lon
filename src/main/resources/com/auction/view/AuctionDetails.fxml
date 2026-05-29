@@ -24,7 +24,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="150.0" layoutY="800.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="Tham gia đấu giá">
+      <Button layoutX="150.0" layoutY="800.0" mnemonicParsing="false" onAction="#joinAuctionAction" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="JOIN AUCTION">
          <font>
             <Font size="24.0" />
          </font>

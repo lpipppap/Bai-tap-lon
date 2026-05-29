@@ -67,7 +67,7 @@ public class BidDAO {
                 int bidId = rs.getInt("bid_id");
                 int bidderId = rs.getInt("bidder_id");
                 double amount = rs.getDouble("bid_amount");
-                LocalDateTime bidTime = rs.getTimestamp("bid_time")                         .toLocalDateTime();
+                LocalDateTime bidTime = rs.getTimestamp("bid_time").toLocalDateTime();
 
                 // lấy bidder từ UserDAO
                 Bidder bidder = (Bidder) UserDAO.getInstance().getUserById(bidderId);
