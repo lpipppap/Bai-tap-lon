@@ -10,9 +10,9 @@ import java.sql.SQLException;
  */
 public class DBConnection {
     // Database credentials
-    private static final String URL = "jdbc:mysql://localhost:3306/auction_db";
-    private static final String USER = "root";
-    private static final String PASSWORD = "032mysql";
+    private static final String URL = "jdbc:mysql://baitaplophethongdaugia-iykyk.l.aivencloud.com:24578/defaultdb?useSSL=true&trustServerCertificate=true";
+    private static final String USER = "avnadmin";
+    private static final String PASSWORD = "AVNS_Nx4hitlqN_bgaDvm8R7";
 
     private static Connection connection;
 
