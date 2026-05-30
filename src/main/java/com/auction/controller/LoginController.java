@@ -2,11 +2,14 @@ package com.auction.controller;
 
 import com.auction.manager.UserManager;
 import com.auction.model.User;
+import com.auction.network.client.AuctionClient;
 import com.auction.util.SceneUtil;
 import com.auction.util.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.io.IOException;
 
 public class LoginController {
     @FXML private ToggleButton bidder;
@@ -86,10 +89,13 @@ public class LoginController {
         String ro = selectedButton.getText();
 
         try {
+            AuctionClient.getInstance().connect();
             User user = UserManager.getInstance().loginUser(em, pw, ro);
             SessionManager.setCurrentUser(user);
             SceneUtil.changeScene(event, "/com/auction/view/AuctionMenu.fxml");
-        } catch (IllegalArgumentException e) {
+        } catch (IOException e) {
+            warning.setText("Không thể kết nối đến server!");}
+        catch (IllegalArgumentException e) {
             warning.setText(e.getMessage());
         } catch (Exception e) {
             warning.setText("An error had occur");
