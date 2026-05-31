@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.auction.controller.ManagerUsersController">
+   <children>
+      <Label layoutX="95.0" layoutY="182.0" prefHeight="35.0" prefWidth="185.0" text="delete user id = ">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="id" layoutX="280.0" layoutY="174.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <Label fx:id="warning" layoutX="134.0" layoutY="293.0" prefHeight="20.0" prefWidth="319.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToMenu" text=" &lt; back" />
+      <Button layoutX="242.0" layoutY="246.0" mnemonicParsing="false" onAction="#deleteUser" text="delete" />
+   </children>
+</AnchorPane>

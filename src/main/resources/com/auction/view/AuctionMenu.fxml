@@ -27,7 +27,8 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <Region prefHeight="80.0" prefWidth="400.0" />
+            <Region prefHeight="80.0" prefWidth="300.0" />
+            <Button fx:id="manageUsers" layoutX="1330.0" layoutY="12.0" mnemonicParsing="false" onAction="#ManageUsersAction" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="MANAGE USERS" />
             <Button fx:id="createAuction" mnemonicParsing="false" onAction="#createAuctionAction" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="+ CREATE AUCTION" />
          </items>
       </ToolBar>

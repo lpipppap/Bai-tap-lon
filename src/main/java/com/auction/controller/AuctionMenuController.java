@@ -27,6 +27,7 @@ public class AuctionMenuController {
     @FXML private GridPane gridPane;
     @FXML private TextField searchBox;
     @FXML private Button createAuction;
+    @FXML private Button manageUsers;
     @FXML private AnchorPane details;
 
     /**
@@ -42,14 +43,14 @@ public class AuctionMenuController {
     @FXML
     private void initialize() {
         User user = SessionManager.getCurrentUser();
-        if (user instanceof Seller) {
-            createAuction.setVisible(true);
-            createAuction.setDisable(false);
-            createAuction.setManaged(true);
-        } else {
+        if (!(user instanceof Seller)) {
             createAuction.setVisible(false);
             createAuction.setDisable(true);
             createAuction.setManaged(false);
+        } if (!(user instanceof Admin)) {
+            manageUsers.setVisible(false);
+            manageUsers.setDisable(true);
+            manageUsers.setManaged(false);
         }
 
         try {
@@ -76,6 +77,12 @@ public class AuctionMenuController {
     private void createAuctionAction(ActionEvent event) {
         disposeAllPreviews();
         SceneUtil.changeScene(event, "/com/auction/view/CreateAuction.fxml");
+    }
+
+    @FXML
+    private void ManageUsersAction(ActionEvent event) {
+        disposeAllPreviews();
+        SceneUtil.changeScene(event, "/com/auction/view/ManageUser.fxml");
     }
 
     public void displayPreparation(List<Auction> auctionList) throws IOException {
