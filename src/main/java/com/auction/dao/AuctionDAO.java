@@ -216,11 +216,13 @@ public class AuctionDAO {
                             && now.isAfter(item.getStartTime())
                             && now.isBefore(item.getEndTime())) {
                         auction.startAuction(); // OPEN → RUNNING
+                        updateStatus(auction.getId(), "RUNNING");
                     } else if (now.isAfter(item.getEndTime())) {
                         // Đảm bảo FINISHED nếu đã hết giờ
                         if (auction.getState() != AuctionState.FINISHED) {
                             auction.startAuction();
                             auction.finishAuction();
+                            updateStatus(auction.getId(), "FINISHED");
                         }
                     }
                     int winnerId = rs.getInt("winner_id");

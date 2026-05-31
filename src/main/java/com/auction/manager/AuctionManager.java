@@ -86,6 +86,7 @@ public class AuctionManager {
         long delay = Duration.between(LocalDateTime.now(), endTime).toMillis();
         scheduler.schedule(() -> {
             auction.finishAuction();
+            AuctionDAO.getInstance().updateStatus(auction.getId(), "FINISHED");
             AuctionServer.broadcast("AUCTION_ENDED||" + auction.getId());
         }, delay, TimeUnit.MILLISECONDS);
 
@@ -153,7 +154,8 @@ public class AuctionManager {
     private boolean doCheckBid(Auction auction, Bidder bidder, double bidAmount) {
 
         if (auction.isExpired()) {
-            auction.finishAuction(); // cập nhật state về FINISHED
+            auction.finishAuction();// cập nhật state về FINISHED
+            AuctionDAO.getInstance().updateStatus(auction.getId(), "FINISHED");
             return false;
         }
 
