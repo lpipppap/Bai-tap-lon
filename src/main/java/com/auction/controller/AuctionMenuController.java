@@ -29,6 +29,16 @@ public class AuctionMenuController {
     @FXML private Button createAuction;
     @FXML private AnchorPane details;
 
+    /**
+     * Lưu lại tất cả AuctionPreviewController đang hiển thị.
+     * Dùng để gọi dispose() khi người dùng rời màn hình menu,
+     * giúp từng thẻ tự huỷ đăng ký listener khỏi AuctionClient.
+     */
+    private final List<AuctionPreviewController> previewControllers = new ArrayList<>();
+
+    /** Controller của panel chi tiết đang hiển thị bên phải. */
+    private AuctionDetailsController currentDetailController;
+
     @FXML
     private void initialize() {
         User user = SessionManager.getCurrentUser();
@@ -53,6 +63,7 @@ public class AuctionMenuController {
 
     @FXML
     private void profileAction(ActionEvent event) {
+        disposeAllPreviews();
         SceneUtil.changeScene(event, "/com/auction/view/Profile.fxml");
     }
 
@@ -63,6 +74,7 @@ public class AuctionMenuController {
 
     @FXML
     private void createAuctionAction(ActionEvent event) {
+        disposeAllPreviews();
         SceneUtil.changeScene(event, "/com/auction/view/CreateAuction.fxml");
     }
 
@@ -76,6 +88,9 @@ public class AuctionMenuController {
 
             AuctionPreviewController controller = loader.getController();
             controller.setAuctionPreview(auction, this);
+
+            // Ghi nhớ để dispose() sau
+            previewControllers.add(controller);
 
             gridPane.add(card, col, row);
 
@@ -113,6 +128,11 @@ public class AuctionMenuController {
 
     public void showAuctionDetails(Auction selectedAuction) {
         try {
+            // Huỷ listener của panel chi tiết cũ trước khi load panel mới
+            if (currentDetailController != null) {
+                currentDetailController.dispose();
+            }
+
             // 1. Load file FXML của màn hình Detail
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/auction/view/AuctionDetails.fxml"));
             AnchorPane detailNode = loader.load();
@@ -135,6 +155,21 @@ public class AuctionMenuController {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Huỷ đăng ký tất cả AuctionPreviewController khỏi AuctionClient.
+     * Phải gọi trước mỗi lần chuyển scene để tránh memory leak.
+     */
+    private void disposeAllPreviews() {
+        for (AuctionPreviewController c : previewControllers) {
+            c.dispose();
+        }
+        previewControllers.clear();
+        if (currentDetailController != null) {
+            currentDetailController.dispose();
+            currentDetailController = null;
         }
     }
 }

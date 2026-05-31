@@ -1,13 +1,15 @@
 package com.auction.controller;
 
 import com.auction.auction.Auction;
+import com.auction.auction.AuctionState;
+import com.auction.network.client.AuctionClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class AuctionPreviewController {
+public class AuctionPreviewController implements AuctionClient.ServerEventListener {
     @FXML private Label name;
     @FXML private Label status;
     @FXML private Label price;
@@ -31,5 +33,34 @@ public class AuctionPreviewController {
 
         this.auction = auction;
         this.auctionMenuController = auctionMenuController;
+
+        // Đăng ký nhận real-time update từ server
+        AuctionClient.getInstance().addListener(this);
     }
+
+    /**
+     * Gọi khi AuctionMenuController bị dispose / người dùng rời màn hình menu,
+     * để tránh memory leak và callback vô dụng.
+     */
+    public void dispose() {
+        AuctionClient.getInstance().removeListener(this);
+    }
+
+    @Override
+    public void onNewPrice(int auctionId, double newPrice, String bidderId) {
+        // Chỉ cập nhật thẻ thuộc phiên nhận được sự kiện
+        if (auction == null || auction.getId() != auctionId) return;
+
+        auction.getItem().setCurrentPrice(newPrice);
+        price.setText("Current price: " + newPrice);
+    }
+
+    @Override
+    public void onAuctionEnded(int auctionId) {
+        if (auction == null || auction.getId() != auctionId) return;
+
+        auction.setState(AuctionState.FINISHED);
+        status.setText("Status: " + AuctionState.FINISHED);
+    }
+
 }

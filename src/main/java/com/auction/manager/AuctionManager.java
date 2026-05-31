@@ -86,6 +86,7 @@ public class AuctionManager {
         long delay = Duration.between(LocalDateTime.now(), endTime).toMillis();
         scheduler.schedule(() -> {
             auction.finishAuction();
+            AuctionDAO.getInstance().updateStatus(auction.getId(), "FINISHED");
             AuctionServer.broadcast("AUCTION_ENDED||" + auction.getId());
         }, delay, TimeUnit.MILLISECONDS);
 
@@ -151,12 +152,10 @@ public class AuctionManager {
      *   5. Gọi auction.notifyObservers() → BidObserver được thông báo
      */
     private boolean doCheckBid(Auction auction, Bidder bidder, double bidAmount) {
-        if (bidAmount <= auction.getItem().getCurrentPrice()) {
-            throw new IllegalArgumentException("Price must be higher than the current price");
-        }
 
         if (auction.isExpired()) {
-            auction.finishAuction(); // cập nhật state về FINISHED
+            auction.finishAuction();// cập nhật state về FINISHED
+            AuctionDAO.getInstance().updateStatus(auction.getId(), "FINISHED");
             return false;
         }
 
@@ -164,6 +163,11 @@ public class AuctionManager {
         try {
             if (!auction.isRunning() || auction.isExpired() || bidder == null) {
                 return false;
+            }
+
+            double latestPrice = AuctionDAO.getInstance().getCurrentPrice(auction.getId());
+            if (bidAmount <= latestPrice) {
+                throw new IllegalArgumentException("Price must be higher than the current price");
             }
 
             BidTransaction newBid = new BidTransaction(

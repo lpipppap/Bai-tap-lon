@@ -216,11 +216,13 @@ public class AuctionDAO {
                             && now.isAfter(item.getStartTime())
                             && now.isBefore(item.getEndTime())) {
                         auction.startAuction(); // OPEN → RUNNING
+                        updateStatus(auction.getId(), "RUNNING");
                     } else if (now.isAfter(item.getEndTime())) {
                         // Đảm bảo FINISHED nếu đã hết giờ
                         if (auction.getState() != AuctionState.FINISHED) {
                             auction.startAuction();
                             auction.finishAuction();
+                            updateStatus(auction.getId(), "FINISHED");
                         }
                     }
                     int winnerId = rs.getInt("winner_id");
@@ -267,5 +269,18 @@ public class AuctionDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public double getCurrentPrice(int auctionId) {
+        String sql = "SELECT current_price FROM items " +
+                "WHERE item_id = (SELECT item_id FROM auctions WHERE auction_id = ?)";
+        try (PreparedStatement stmt = DBConnection.getConnection().prepareStatement(sql)) {
+            stmt.setInt(1, auctionId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getDouble("current_price");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
     }
 }
