@@ -37,13 +37,13 @@ public class PlaceBidController implements AuctionClient.ServerEventListener {
         }
 
         // Đăng ký controller này làm listener để nhận sự kiện từ server
-        AuctionClient.getInstance().setListener(this);
+        AuctionClient.getInstance().addListener(this);
     }
 
     @FXML
     private void backToMenu(ActionEvent event) {
         // Huỷ đăng ký listener khi rời màn hình
-        AuctionClient.getInstance().setListener(null);
+        AuctionClient.getInstance().removeListener(this);
         SceneUtil.changeScene(event, "/com/auction/view/AuctionMenu.fxml");
     }
 
@@ -137,4 +137,12 @@ public class PlaceBidController implements AuctionClient.ServerEventListener {
         warning.setTextFill(Color.web("#ff4444"));
         warning.setText(message);
     }
+
+    @Override
+    public void onAuctionEnded(int auctionId){
+        if (auction == null || auction.getId() != auctionId) return;
+        placeBid.setDisable(true);
+        warning.setTextFill(Color.web("#ff4444"));
+        warning.setText("This auction has ended.");
+    };
 }

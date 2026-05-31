@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * AuctionClient — chạy phía CLIENT (JavaFX).
@@ -22,24 +24,24 @@ public class AuctionClient {
     private static final String HOST = "localhost";
     private static final int    PORT = 5000;
 
-    private static AuctionClient instance;
+    private static volatile AuctionClient instance;
 
     private Socket       socket;
     private PrintWriter  out;
     private BufferedReader in;
 
     /** Callback nhận sự kiện từ server — PlaceBidController đăng ký vào đây */
-    private ServerEventListener listener;
+    private final List<ServerEventListener> listeners = new CopyOnWriteArrayList<>();
 
     // -------------------------------------------------------------------------
     // Singleton
     // -------------------------------------------------------------------------
 
-    private AuctionClient() {}
-
     public static AuctionClient getInstance() {
         if (instance == null) {
-            instance = new AuctionClient();
+            synchronized (AuctionClient.class) {
+                if (instance == null) instance = new AuctionClient();
+            }
         }
         return instance;
     }
@@ -71,6 +73,21 @@ public class AuctionClient {
         } catch (IOException e) {
             System.err.println("[AuctionClient] Lỗi đóng kết nối: " + e.getMessage());
         }
+    }
+
+    /** Đăng ký listener — gọi trong initialize() của controller. */
+    public void addListener(ServerEventListener listener) {
+        if (listener != null && !listeners.contains(listener)) {
+            listeners.add(listener);
+            System.out.println("[AuctionClient] Đã thêm listener: " + listener.getClass().getSimpleName());
+        }
+    }
+
+    /** Huỷ đăng ký listener — gọi khi controller rời màn hình. */
+    public void removeListener(ServerEventListener listener) {
+        listeners.remove(listener);
+        System.out.println("[AuctionClient] Đã xoá listener: "
+                + (listener != null ? listener.getClass().getSimpleName() : "null"));
     }
 
     // Gửi lệnh đặt giá lên server
@@ -112,12 +129,12 @@ public class AuctionClient {
      *   ERROR||message                          — lỗi
      */
     private void handleServerMessage(String message) {
-        if (listener == null) return;
+        if (listeners.isEmpty()) return;
 
         String[] tokens = message.split("\\|\\|");
         String cmd = tokens[0];
 
-        // Chạy callback trên JavaFX Application Thread
+        // Chạy callback trên JavaFX Application Thread để update UI an toàn
         javafx.application.Platform.runLater(() -> {
             switch (cmd) {
                 case "NEW_PRICE" -> {
@@ -125,11 +142,24 @@ public class AuctionClient {
                     int    auctionId = Integer.parseInt(tokens[1]);
                     double newPrice  = Double.parseDouble(tokens[2]);
                     String bidderId  = tokens[3];
-                    listener.onNewPrice(auctionId, newPrice, bidderId);
+                    for (ServerEventListener l : listeners) {
+                        l.onNewPrice(auctionId, newPrice, bidderId);
+                    }
+                }
+                case "AUCTION_ENDED" -> {
+                    // AUCTION_ENDED||auctionId
+                    int auctionId = Integer.parseInt(tokens[1]);
+                    for (ServerEventListener l : listeners) {
+                        l.onAuctionEnded(auctionId);
+                    }
                 }
                 case "ERROR" -> {
+                    // ERROR chỉ gửi đến client gửi giá sai — vẫn broadcast vì
+                    // chỉ PlaceBidController đang active mới gọi sendBid()
                     String errorMsg = tokens.length > 1 ? tokens[1] : "Lỗi không xác định";
-                    listener.onError(errorMsg);
+                    for (ServerEventListener l : listeners) {
+                        l.onError(errorMsg);
+                    }
                 }
                 default -> System.out.println("[AuctionClient] Lệnh lạ từ server: " + cmd);
             }
@@ -138,18 +168,22 @@ public class AuctionClient {
 
     // Callback interface
 
-    public void setListener(ServerEventListener listener) {
-        this.listener = listener;
-    }
-
     /**
-     * Interface để PlaceBidController (hoặc bất kỳ Controller nào) nhận sự kiện từ server.
+     * Interface cho mọi controller muốn nhận sự kiện real-time từ server.
+     *
+     * Cách dùng:
+     *   - Controller implements ServerEventListener
+     *   - Trong initialize():    AuctionClient.getInstance().addListener(this)
+     *   - Khi rời màn hình:      AuctionClient.getInstance().removeListener(this)
      */
     public interface ServerEventListener {
         /** Server broadcast giá mới thành công */
         void onNewPrice(int auctionId, double newPrice, String bidderId);
 
+        /** Server thông báo phiên đấu giá kết thúc */
+        void onAuctionEnded(int auctionId);
+
         /** Server trả về lỗi (giá không hợp lệ, phiên đóng...) */
-        void onError(String message);
+        default void onError(String message) {};
     }
 }
