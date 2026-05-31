@@ -249,4 +249,23 @@ public class AuctionDAO {
         }
         return null;
     }
+
+    public boolean updateWinner(int auctionId, int winnerId) {
+        String sql = "UPDATE auctions SET winner_id = ? WHERE auction_id = ?";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, winnerId);
+            ps.setInt(2, auctionId);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error updating winner: " + e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

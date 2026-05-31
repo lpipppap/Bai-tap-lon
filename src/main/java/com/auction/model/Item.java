@@ -17,6 +17,7 @@ public abstract class Item extends Entity {
         super();
         this.name = name;
         this.startPrice = startPrice;
+        this.currentPrice = startPrice;
         this.startTime = startTime;
         this.endTime = endTime;
         this.seller = seller;
