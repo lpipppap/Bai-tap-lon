@@ -161,38 +161,31 @@ public class UserDAO {
     public User getUserById(int userId) {
         String sql = "SELECT * FROM users WHERE user_id = ?";
 
-        try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, userId);
 
-            ResultSet rs = stmt.executeQuery();
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String username = rs.getString("username");
+                    String password = rs.getString("password");
+                    String email    = rs.getString("email");
+                    String role     = rs.getString("role");
 
-            if (rs.next()) {
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-                String email = rs.getString("email");
-                String role = rs.getString("role");
+                    User user;
+                    if ("Seller".equals(role))      user = new Seller(username, password, email);
+                    else if ("Admin".equals(role))  user = new Admin(username, password, email);
+                    else                            user = new Bidder(username, password, email);
 
-                User user;
-
-                if ("Seller".equals(role)) {
-                    user = new Seller(username, password, email);
-                } else if ("Admin".equals(role)) {
-                    user = new Admin(username, password, email);
-                } else {
-                    user = new Bidder(username, password, email);
+                    user.setId(userId);
+                    return user;
                 }
-
-                user.setId(userId);
-                return user;
             }
-
         } catch (SQLException e) {
             System.out.println("✗ Error getting user by ID: " + e.getMessage());
             e.printStackTrace();
         }
-
         return null;
     }
 

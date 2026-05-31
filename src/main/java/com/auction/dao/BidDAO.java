@@ -59,11 +59,14 @@ public class BidDAO {
     }
 
     public boolean updateCurrentPrice(int auctionId, double newPrice) {
-        String sql = "UPDATE items SET current_price = ? WHERE item_id = (SELECT item_id FROM auctions WHERE auction_id = ?)";
+        String sql = "UPDATE items SET current_price = ? " +
+                "WHERE item_id = (SELECT item_id FROM auctions WHERE auction_id = ?) " +
+                "AND current_price < ?";
 
         try (PreparedStatement stmt = DBConnection.getConnection().prepareStatement(sql)) {
             stmt.setDouble(1, newPrice);
             stmt.setInt(2, auctionId);
+            stmt.setDouble(3, newPrice);
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
