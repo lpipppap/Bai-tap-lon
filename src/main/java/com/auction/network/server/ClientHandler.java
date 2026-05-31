@@ -3,6 +3,7 @@ package com.auction.network.server;
 import com.auction.dao.AuctionDAO;
 import com.auction.manager.AuctionManager;
 import com.auction.auction.Auction;
+import com.auction.util.DBConnection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,16 +58,24 @@ public class ClientHandler implements Runnable {
                     //           - Gọi BidDAO.saveBid() → lưu xuống DB
                     //           - Cập nhật auction.setWinningBid()
                     //           - Gọi auction.notifyObservers()
-                    boolean success = AuctionManager.getInstance().checkBid(auction, userId, bidAmount);
+                    try {
 
-                    if (success) {
+                        boolean success = AuctionManager.getInstance().checkBid(auction, userId, bidAmount);
 
-                        //Broadcast giá mới đến TẤT CẢ client đang kết nối
+                        if (success) {
+                            //Broadcast giá mới đến TẤT CẢ client đang kết nối
+
                         String serverEvent = "NEW_PRICE||" + auctionId + "||" + bidAmount + "||" + userId;
                         AuctionServer.broadcast(serverEvent);
                     } else {
                         // Chỉ trả lỗi riêng về client gửi sai giá
                         sendEvent("ERROR||Mức giá đặt không hợp lệ hoặc phiên đã đóng!");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        // Giá không hợp lệ (ví dụ: thấp hơn giá hiện tại do race condition).
+                        // Trả lỗi về đúng client, KHÔNG chết thread.
+                        sendEvent("ERROR||" + e.getMessage());
+                        System.out.println("✗ Bid bị từ chối (userId=" + userId + "): " + e.getMessage());
                     }
                 }
             }
@@ -95,6 +104,7 @@ public class ClientHandler implements Runnable {
             if (in     != null) in.close();
             if (out    != null) out.close();
             if (socket != null && !socket.isClosed()) socket.close();
+            DBConnection.closeConnection();
             System.out.println("Đã dọn dẹp và ngắt kết nối an toàn với Client.");
         } catch (IOException e) {
             System.err.println("Lỗi đóng kết nối: " + e.getMessage());

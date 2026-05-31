@@ -23,30 +23,19 @@ public class DBConnection {
      * @return Connection object to MySQL database
      * @throws SQLException if connection fails
      */
+    private static final ThreadLocal<Connection> threadLocalConn = new ThreadLocal<>();
+
     public static Connection getConnection() throws SQLException {
-        // Load MySQL JDBC driver
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("MySQL JDBC Driver not found!");
-            e.printStackTrace();
-            throw new SQLException("Driver not found");
-        }
+        try { Class.forName("com.mysql.cj.jdbc.Driver"); }
+        catch (ClassNotFoundException e) { throw new SQLException("Driver not found"); }
 
-        // Create new connection if one doesn't exist or is closed
-        if (connection == null || connection.isClosed()) {
-            try {
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                System.out.println("✓ Connected to MySQL database successfully!");
-            } catch (SQLException e) {
-                System.out.println("✗ Failed to connect to database!");
-                System.out.println("Error: " + e.getMessage());
-                e.printStackTrace();
-                throw e;
-            }
+        Connection conn = threadLocalConn.get();
+        if (conn == null || conn.isClosed()) {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            threadLocalConn.set(conn);
+            System.out.println("✓ New DB connection for thread: " + Thread.currentThread().getName());
         }
-
-        return connection;
+        return conn;
     }
 
     /**
@@ -54,13 +43,15 @@ public class DBConnection {
      */
     public static void closeConnection() {
         try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-                System.out.println("✓ Database connection closed");
+            Connection conn = threadLocalConn.get();
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+                System.out.println("✓ DB connection closed for thread: " + Thread.currentThread().getName());
             }
         } catch (SQLException e) {
-            System.out.println("Error closing connection: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            threadLocalConn.remove();
         }
     }
 
