@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.auction.controller.PlaceBidController">
+   <children>
+      <AnchorPane layoutX="200.0" layoutY="50.0" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #292b29; -fx-border-color: #02fdba; -fx-background-radius: 50; -fx-border-radius: 50;">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="100.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="name" layoutX="600.0" layoutY="50.0" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="startPrice" layoutX="600.0" layoutY="125.0" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentPrice" layoutX="600.0" layoutY="200.0" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="clock" layoutX="600.0" layoutY="275.0" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="description" layoutX="600.0" layoutY="350.0" prefHeight="100.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="placeBid" layoutX="950.0" layoutY="600.0" mnemonicParsing="false" onAction="#placeBidAction" prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #02fdba; -fx-background-radius: 50;" text="PLACE BID">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Label fx:id="warning" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="750.0" prefHeight="40.0" prefWidth="800.0" textFill="RED">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="enterPrice" layoutX="950.0" layoutY="530.0" prefHeight="50.0" prefWidth="200.0" />
+         </children>
+      </AnchorPane>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToMenu" style="-fx-background-color: transparent;" text="&lt;" textFill="#02fdba">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

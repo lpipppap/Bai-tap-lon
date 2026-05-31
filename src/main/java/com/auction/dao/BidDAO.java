@@ -41,11 +41,37 @@ public class BidDAO {
                 if (generatedKeys.next()) {
                     bid.setBidId(generatedKeys.getInt(1));
                     System.out.println("✓ Bid saved with ID: " + bid.getBidId());
+
+                    updateCurrentPrice(bid.getAuctionId(), bid.getBidAmount());
+
+                    boolean winnerUpdated = AuctionDAO.getInstance().updateWinner(
+                            bid.getAuctionId(),
+                            bid.getBidder().getId()
+                    );
                     return true;
                 }
             }
         } catch (SQLException e) {
             System.out.println("✗ Error saving bid: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateCurrentPrice(int auctionId, double newPrice) {
+        String sql = "UPDATE items SET current_price = ? WHERE item_id = (SELECT item_id FROM auctions WHERE auction_id = ?)";
+
+        try (PreparedStatement stmt = DBConnection.getConnection().prepareStatement(sql)) {
+            stmt.setDouble(1, newPrice);
+            stmt.setInt(2, auctionId);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("✓ Current price updated to: " + newPrice + " for auction ID: " + auctionId);
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("✗ Error updating current price: " + e.getMessage());
             e.printStackTrace();
         }
         return false;
