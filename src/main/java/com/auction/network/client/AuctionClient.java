@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class AuctionClient {
 
-    private static final String HOST = "localhost";
+    private static final String HOST = "10.11.220.210";
     private static final int    PORT = 5000;
 
     private static volatile AuctionClient instance;

@@ -6,7 +6,7 @@ import com.auction.model.User;
 import com.auction.network.client.AuctionClient;
 import com.auction.util.SceneUtil;
 import com.auction.util.SessionManager;
-import javafx.application.Platform;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
 public class PlaceBidController implements AuctionClient.ServerEventListener {
-
+    @FXML private Label winnerName;
     @FXML private Label    name;
     @FXML private Label    startPrice;
     @FXML private Label    currentPrice;
@@ -49,6 +49,7 @@ public class PlaceBidController implements AuctionClient.ServerEventListener {
 
     public void setData(Auction auction) {
         this.auction = auction;
+        winnerName.setText("Current winner:" + auction.getWinningBid().getBidder().getId() + " - " + auction.getWinningBid().getBidder().getUsername());
         name.setText("Product name: "  + auction.getItem().getName());
         startPrice.setText("Start price: " + auction.getItem().getStartPrice());
         currentPrice.setText("Highest price: " + auction.getItem().getCurrentPrice());
