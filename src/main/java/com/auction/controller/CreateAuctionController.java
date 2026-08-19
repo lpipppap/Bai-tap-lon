@@ -3,6 +3,7 @@ package com.auction.controller;
 import com.auction.manager.AuctionManager;
 import com.auction.model.Seller;
 import com.auction.model.User;
+import com.auction.util.CloudinaryService;
 import com.auction.util.SceneUtil;
 import com.auction.util.SessionManager;
 import javafx.event.ActionEvent;
@@ -122,7 +123,7 @@ public class CreateAuctionController {
 
         if (file != null) {
             this.selectedImageFile = file;
-            this.imageFileName = file.getName();
+            this.imageFileName = CloudinaryService.uploadImage(file);
 
             Image image = new Image(file.toURI().toString());
             imageView.setImage(image);

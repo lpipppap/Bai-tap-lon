@@ -29,15 +29,7 @@ public class AuctionMenuController {
     @FXML private Button createAuction;
     @FXML private Button manageUsers;
     @FXML private AnchorPane details;
-
-    /**
-     * Lưu lại tất cả AuctionPreviewController đang hiển thị.
-     * Dùng để gọi dispose() khi người dùng rời màn hình menu,
-     * giúp từng thẻ tự huỷ đăng ký listener khỏi AuctionClient.
-     */
     private final List<AuctionPreviewController> previewControllers = new ArrayList<>();
-
-    /** Controller của panel chi tiết đang hiển thị bên phải. */
     private AuctionDetailsController currentDetailController;
 
     @FXML

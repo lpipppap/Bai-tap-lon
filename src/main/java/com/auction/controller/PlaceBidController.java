@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public class PlaceBidController implements AuctionClient.ServerEventListener {
@@ -24,6 +26,7 @@ public class PlaceBidController implements AuctionClient.ServerEventListener {
     @FXML private TextField enterPrice;
     @FXML private Button   placeBid;
     @FXML private Label    warning;
+    @FXML ImageView image;
 
     private Auction auction;
 
@@ -55,6 +58,7 @@ public class PlaceBidController implements AuctionClient.ServerEventListener {
         currentPrice.setText("Highest price: " + auction.getItem().getCurrentPrice());
         clock.setText("");
         description.setText(auction.getItem().getDescription());
+        image.setImage(new Image(auction.getItem().getImage(), true));
     }
 
     // Đặt giá — gửi lệnh BID qua AuctionClient → TCP Socket → Server

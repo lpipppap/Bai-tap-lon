@@ -26,13 +26,13 @@ public class AuctionPreviewController implements AuctionClient.ServerEventListen
     }
 
     public void setAuctionPreview(Auction auction, AuctionMenuController auctionMenuController) {
+        this.auction = auction;
+        this.auctionMenuController = auctionMenuController;
+
         name.setText("Name: " + auction.getItem().getName());
         status.setText("Status: " + auction.getState().toString());
         price.setText("Current price: " + auction.getItem().getCurrentPrice());
-        image.setImage(new Image("file:path/to/images/" + auction.getItem().getImage()));
-
-        this.auction = auction;
-        this.auctionMenuController = auctionMenuController;
+        image.setImage(new Image(auction.getItem().getImage(), true));
 
         // Đăng ký nhận real-time update từ server
         AuctionClient.getInstance().addListener(this);

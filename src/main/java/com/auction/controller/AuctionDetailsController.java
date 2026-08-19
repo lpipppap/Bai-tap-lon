@@ -12,6 +12,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,6 +33,7 @@ public class AuctionDetailsController implements AuctionClient.ServerEventListen
     @FXML private Label type;
     @FXML private  Label currentPrice;
     @FXML private Label timeLeft;
+    @FXML private ImageView image;
     private Auction auction;
 
     public void setDetailsView(Auction auction) {
@@ -41,6 +44,7 @@ public class AuctionDetailsController implements AuctionClient.ServerEventListen
         name.setText("Product name: " + auction.getItem().getName());
         type.setText("Type: " + auction.getItem().getClass().getSimpleName());
         currentPrice.setText("Current price: " + auction.getItem().getCurrentPrice());
+        image.setImage(new Image(auction.getItem().getImage(), true));
         timeLeft.setText("");
 
         // Đăng ký nhận real-time update
