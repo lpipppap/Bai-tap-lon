@@ -116,7 +116,7 @@ public class AuctionMenuController {
             filtered = allAuctions;
         } else {
             for (Auction auction : allAuctions) {
-                if (auction.getState() == AuctionState.RUNNING || auction.getState() == AuctionState.OPEN || auction.getState() == AuctionState.FINISHED) {
+                if (auction.getState() == AuctionState.RUNNING || auction.getState() == AuctionState.OPEN) {
                     filtered.add(auction);
                 }
             }

@@ -4,6 +4,7 @@ import com.auction.auction.Auction;
 import com.auction.auction.AuctionState;
 import com.auction.network.client.AuctionClient;
 import com.auction.util.SceneUtil;
+import com.auction.util.Timer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +46,7 @@ public class AuctionDetailsController implements AuctionClient.ServerEventListen
         type.setText("Type: " + auction.getItem().getClass().getSimpleName());
         currentPrice.setText("Current price: " + auction.getItem().getCurrentPrice());
         image.setImage(new Image(auction.getItem().getImage(), true));
-        timeLeft.setText("");
+        Timer.timer(timeLeft, auction.getItem().getEndTime());
 
         // Đăng ký nhận real-time update
         AuctionClient.getInstance().addListener(this);

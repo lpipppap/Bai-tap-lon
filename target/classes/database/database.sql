@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS items (
     seller_id INT NOT NULL,
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
+    image VARCHAR(255),
     FOREIGN KEY (seller_id) REFERENCES users(user_id)
 );
 

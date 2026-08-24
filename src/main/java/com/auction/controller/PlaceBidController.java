@@ -1,12 +1,14 @@
 package com.auction.controller;
 
 import com.auction.auction.Auction;
+import com.auction.model.BidTransaction;
 import com.auction.model.Bidder;
 import com.auction.model.User;
 import com.auction.network.client.AuctionClient;
 import com.auction.util.SceneUtil;
 import com.auction.util.SessionManager;
 
+import com.auction.util.Timer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,7 +23,7 @@ public class PlaceBidController implements AuctionClient.ServerEventListener {
     @FXML private Label    name;
     @FXML private Label    startPrice;
     @FXML private Label    currentPrice;
-    @FXML private Label    clock;
+    @FXML private Label    timeLeft;
     @FXML private Label    description;
     @FXML private TextField enterPrice;
     @FXML private Button   placeBid;
@@ -52,13 +54,18 @@ public class PlaceBidController implements AuctionClient.ServerEventListener {
 
     public void setData(Auction auction) {
         this.auction = auction;
-        winnerName.setText("Current winner:" + auction.getWinningBid().getBidder().getId() + " - " + auction.getWinningBid().getBidder().getUsername());
+
+        BidTransaction wb = auction.getWinningBid();
+        if (wb != null) {
+            winnerName.setText("Current winner: " + auction.getWinningBid().getBidder().getId() + " - " + auction.getWinningBid().getBidder().getUsername());
+        } else winnerName.setText("Current winner: N/A");
         name.setText("Product name: "  + auction.getItem().getName());
         startPrice.setText("Start price: " + auction.getItem().getStartPrice());
         currentPrice.setText("Highest price: " + auction.getItem().getCurrentPrice());
-        clock.setText("");
         description.setText(auction.getItem().getDescription());
         image.setImage(new Image(auction.getItem().getImage(), true));
+
+        Timer.timer(timeLeft, auction.getItem().getEndTime());
     }
 
     // Đặt giá — gửi lệnh BID qua AuctionClient → TCP Socket → Server

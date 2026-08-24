@@ -13,11 +13,16 @@
    <children>
       <AnchorPane layoutX="200.0" layoutY="50.0" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #292b29; -fx-border-color: #02fdba; -fx-background-radius: 50; -fx-border-radius: 50;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="50.0">
          <children>
-            <HBox layoutX="101.33333587646484" layoutY="50.0" spacing="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <HBox layoutX="100.0" layoutY="50.0" prefHeight="450.0" prefWidth="1000.0" spacing="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
                <children>
-                  <ImageView fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="image" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
                   <VBox prefHeight="400.0" prefWidth="500.0" spacing="30.0">
                      <children>
+                        <Label fx:id="winnerName" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                         <Label fx:id="name" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
                            <font>
                               <Font size="24.0" />
@@ -33,7 +38,7 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="clock" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
+                        <Label fx:id="timeLeft" prefHeight="40.0" prefWidth="500.0" text="Label" textFill="#02fdba">
                            <font>
                               <Font size="24.0" />
                            </font>
